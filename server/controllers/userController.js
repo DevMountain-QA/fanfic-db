@@ -26,14 +26,14 @@ module.exports = {
             .then(results => {
                 if (JSON.stringify(results[0].api_key) == req.query.key) {
                     dbInstance.getUsers()
-                        .then(users => res.status(200).send(users))
+                        .then(users => res.status(201).send(users))
                         .catch(err => {
                             console.log(err)
                             res.status(500).send(err)
                         })
                 }
                 else
-                    res.status(500).send()
+                    res.status(401).send()
             })
             .catch(() => {
                 //unathorized

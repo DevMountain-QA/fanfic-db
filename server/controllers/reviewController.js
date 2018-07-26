@@ -12,14 +12,14 @@ module.exports = {
         console.log(req.body)
         let { fanfic_id, user_id, stars, review } = req.body
         dbInstance.postReview([fanfic_id, user_id, stars, review])
-            .then(() => res.status(200).send())
+            .then(() => res.status(201).send())
             .catch(() => res.status(500).send())
     },
     delete: (req, res, next) => {
         const dbInstance = req.app.get('db')
         console.log(`deleting review ${req.params.review} by ${req.params.user}`)
         dbInstance.deleteReview([req.params.review, req.params.user])
-            .then(()=>res.status(200).send())
+            .then(()=>res.status(202).send())
             .catch(()=>res.status(500).send())
     }
 }

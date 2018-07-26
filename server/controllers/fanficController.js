@@ -10,10 +10,10 @@ module.exports = {
             .then(results => {
                 if (JSON.stringify(results[0].api_key) == req.query.key) {
                     dbInstance.postFanfic([title, author, synopsis])
-                        .then(() => res.status(200).send())
+                        .then(() => res.status(201).send())
                         .catch(() => res.status(500).send())
                 }
-                else (res.status(500).send())
+                else (res.status(401).send())
             })
             .catch(() => {
                 //unautorized
@@ -41,7 +41,7 @@ module.exports = {
                                 synopsis = fanfic.synopsis
                             console.log(`title: ${title}, author: ${author}, synopsis: ${synopsis}`)
                             dbInstance.editFanfic([req.params.id, title, author, synopsis])
-                                .then(res.status(200).send())
+                                .then(res.status(202).send())
                                 .catch(() => res.status(500).send())
                         })
                         .catch(() => res.status(500).send())
@@ -59,9 +59,11 @@ module.exports = {
             .then(results => {
                 if (JSON.stringify(results[0].api_key) == req.query.key) {
                     dbInstance.deleteFanfic([req.params.id])
-                        .then(res.status(200).send())
-                        .catch(() => rest.status(500).send())
+                        .then(res.status(202).send())
+                        .catch(() => res.status(500).send())
                 }
+                else
+                    res.status(401).send()
             })
             .catch(() => {
                 //unathorized
@@ -85,7 +87,7 @@ module.exports = {
         const dbInstance = req.app.get('db');
 
         dbInstance.searchFanfic([req.query.search])
-            .then(fanfic => res.status(200).send(fanfic))
+            .then(fanfic => res.status(418).send(fanfic))
             .catch(err => {
                 console.log(err)
                 res.status(500).send(err)
