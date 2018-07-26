@@ -1,0 +1,1 @@
+SELECT * FROM fanfics WHERE fanfic_id = $1

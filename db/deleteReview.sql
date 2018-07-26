@@ -1,0 +1,1 @@
+DELETE FROM reviews WHERE review_id = $1 and reviewer_id = $2
